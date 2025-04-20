@@ -1,0 +1,20 @@
+# 📂 Ne pas suivre les données
+data/
+*.csv
+*.xlsx
+
+# 🧪 Ne pas suivre les notebooks temporaires
+*.ipynb_checkpoints
+
+# 🔐 Clés ou fichiers secrets
+.env
+
+# 📦 Environnements
+.venv/
+env/
+__pycache__/
+*.pyc
+
+# 🧪 Résultats temporaires ou logs
+logs/
+outputs/
