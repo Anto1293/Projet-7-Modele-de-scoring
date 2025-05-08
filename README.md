@@ -45,8 +45,7 @@ Projet 7 Modèle de scoring/
 ## 🛠️ Installation rapide
 bash
 # Cloner le repo
-git clone [https://github.com/ton-utilisateur/ton-repo.git]
-cd ton-repo
+git clone [https://github.com/Anto1293/Projet-7-Modele-de-scoring.git]
 
 # Installer les dépendances
 pip install -r requirements.txt
