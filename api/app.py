@@ -5,6 +5,13 @@ import mlflow
 import numpy as np
 from functools import lru_cache
 
+# Route d'accueil GET /
+# GET / → retourne : {"message": "Bienvenue sur l'API de scoring client. Utilisez /score pour prédire."}
+@app.get("/")
+def root():
+    return {"message": "Bienvenue sur l'API de scoring client. Utilisez /score pour prédire."}
+
+
 # Spécifie correctement l'URI du modèle enregistré
 mlflow.set_tracking_uri('http://localhost:5000')
 model_name = "LightGBM"
