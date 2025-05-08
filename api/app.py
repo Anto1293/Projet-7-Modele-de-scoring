@@ -18,14 +18,12 @@ def root():
 
 # Spécifie correctement l'URI du modèle enregistré
 mlflow.set_tracking_uri('http://localhost:5000')
-model_name = "LightGBM"
-model_alias = "final"
 
-# Au lieu de charger le modèle manuellement qui est lent, encapsule le modèle 
-# lru_cache: decorator de Python provenant du module functools qui mémorise les résultats d’une fonction pour éviter de la recalculer 
-@lru_cache()
-def get_model():
-    return mlflow.pyfunc.load_model(f"models:/{model_name}@{model_alias}")
+# Charger le modèle depuis le Model Registry de MLflow
+model_name = "LightGBM"
+model_alias = "final"  # L'alias défini dans MLflow
+model = mlflow.pyfunc.load_model(f"models:/{model_name}@{model_alias}")
+
 
 # Créer un schéma de données pour FastAPI (Input)
 class InputData(BaseModel):
@@ -106,21 +104,22 @@ class InputData(BaseModel):
 
 # Créer un endpoint POST /predict
 @app.post("/score")
+
 def predict(data: InputData):
-    # Convertir l'input en DataFrame
-    input_df = pd.DataFrame([data.model_dump(by_alias=True)])  # Correct avec Pydantic v2 au lieu de data.dict
-    print("Colonnes envoyées au modèle :", input_df.columns.tolist())
-    
-    # Utiliser le modèle pour prédire
-    model = get_model()
-    prediction = model.predict(input_df)[0]
-    
-    # Appliquer le seuil optimal pour dire accepté / refusé
-    decision = "refusé" if prediction > 0.10 else "accepté"
-    
-    return {
-        "proba": round(float(prediction), 4),
-        "décision": decision
-    }
-
-
+    try:
+        # Convertir l'input en DataFrame
+        input_df = pd.DataFrame([data.model_dump(by_alias=True)])  # Correct avec Pydantic v2 au lieu de data.dict
+        print("Colonnes envoyées au modèle :", input_df.columns.tolist())
+        
+        # Utiliser le modèle pour prédire
+        prediction = model.predict(input_df)[0]
+        
+        # Appliquer le seuil optimal pour dire accepté / refusé
+        decision = "refusé" if prediction > 0.10 else "accepté"
+        
+        return {
+            "proba": round(float(prediction), 4),
+            "décision": decision
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
