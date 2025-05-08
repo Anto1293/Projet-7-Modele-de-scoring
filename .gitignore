@@ -1,20 +1,31 @@
-# 📂 Ne pas suivre les données
+# 📂 Données brutes ou dérivées
 data/
 *.csv
 *.xlsx
 
-# 🧪 Ne pas suivre les notebooks temporaires
+# 🧪 Notebooks temporaires
 *.ipynb_checkpoints
 
-# 🔐 Clés ou fichiers secrets
+# 🔐 Secrets et variables d'environnement
 .env
 
-# 📦 Environnements
+# 🐍 Environnements virtuels
 .venv/
 env/
 __pycache__/
 *.pyc
+*.pyo
 
-# 🧪 Résultats temporaires ou logs
+# 📊 Logs ou sorties
 logs/
 outputs/
+
+# 📦 MLflow, modèles lourds, artefacts
+mlruns/
+mlartifacts/
+*.joblib
+*.pkl
+
+# 💻 Config IDE
+.vscode/
+.idea/

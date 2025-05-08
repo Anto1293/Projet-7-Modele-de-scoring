@@ -1,22 +1,27 @@
-name: scoring-credit
+name: scoring-env
 channels:
-  - defaults
   - conda-forge
+  - defaults
 dependencies:
   - python=3.10
-  - jupyterlab
-  - pandas
-  - numpy
-  - scikit-learn
-  - matplotlib
+  - pandas=2.2.3
+  - numpy=2.2.5
+  - matplotlib=3.10.1
   - seaborn
-  - xgboost
+  - scikit-learn
+  - joblib
+  - shap
+  - lightgbm
   - mlflow
-  - streamlit
+  - scipy
   - fastapi
+  - evidently
   - uvicorn
+  - streamlit
+  - imbalanced-learn
+  - scikit-optimize
+  - evidently
+  - pytest
   - pip
   - pip:
-      - shap
-      - evidently
-      - pytest
+    - requests
