@@ -5,6 +5,10 @@ import mlflow
 import numpy as np
 from functools import lru_cache
 
+
+# Créer l'application FastAPI
+app = FastAPI(title="API Scoring Client", description="Prédiction de défaut client")
+
 # Route d'accueil GET /
 # GET / → retourne : {"message": "Bienvenue sur l'API de scoring client. Utilisez /score pour prédire."}
 @app.get("/")
@@ -22,9 +26,6 @@ model_alias = "final"
 @lru_cache()
 def get_model():
     return mlflow.pyfunc.load_model(f"models:/{model_name}@{model_alias}")
-
-# Créer l'application FastAPI
-app = FastAPI(title="API Scoring Client", description="Prédiction de défaut client")
 
 # Créer un schéma de données pour FastAPI (Input)
 class InputData(BaseModel):
